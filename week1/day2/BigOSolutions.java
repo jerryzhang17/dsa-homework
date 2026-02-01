@@ -84,7 +84,7 @@ function hasDuplicates(arr) {
 // Optimize to O(n) using a Set or Object
 function hasDuplicatesOptimized(arr) {
   // Your code here
-  import java.util.HashSet;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Main {
@@ -101,3 +101,4 @@ public class Main {
         return false;
     }
 }
+

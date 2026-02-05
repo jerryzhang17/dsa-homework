@@ -1,34 +1,67 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
         Pokemon pikachu = new Pokemon("Pikachu", "Electric");
         Pokemon charmander = new Pokemon("Charmander", "Fire");
 
-        System.out.println(pikachu);
-        System.out.println(charmander);
+        // Step 1
+        PokeBox pb = new PokeBox(pikachu);
+        System.out.println("Step 1: " + pb.get());
+        pb.set(charmander);
+        System.out.println("Step 1 after set: " + pb.get());
+        System.out.println();
 
+        // Step 2
         Box<Pokemon> pokemonBox = new Box<>(pikachu);
         Box<String> itemBox = new Box<>("Oran Berry");
         Box<Integer> levelBox = new Box<>(25);
 
+        System.out.println("Step 2: " + pokemonBox.get());
+        System.out.println("Step 2: " + itemBox.get());
+        System.out.println("Step 2: " + levelBox.get());
+        System.out.println();
+
+        // Step 3
         Pair<Pokemon, String> heldItem = new Pair<>(pikachu, "Oran Berry");
-        System.out.println(heldItem);
+        System.out.println("Step 3: " + heldItem);
+        System.out.println();
 
-        PokemonOnlyBox<Pokemon> b1 = new PokemonOnlyBox<>(pikachu);
-        System.out.println(b1.getType());
+        // Step 4
+        PokemonOnlyBox<Pokemon> onlyPokes = new PokemonOnlyBox<>(charmander);
+        System.out.println("Step 4 type: " + onlyPokes.getType());
+        System.out.println();
 
+        // Step 5
         BattlePokemon squirtle = new BattlePokemon("Squirtle", "Water", 60);
         PokemonOnlyBox<BattlePokemon> battleBox = new PokemonOnlyBox<>(squirtle);
-        System.out.println(battleBox.get());
+        System.out.println("Step 5: " + battleBox.get());
+        System.out.println();
 
+        // Step 6
         Box<String> a = new Box<>("Potion");
         Box<String> b = new Box<>("Rare Candy");
-        System.out.println("Before: a=" + a.get() + ", b=" + b.get());
+        System.out.println("Before swap: a=" + a.get() + ", b=" + b.get());
         swap(a, b);
-        System.out.println("After:  a=" + a.get() + ", b=" + b.get());
+        System.out.println("After swap:  a=" + a.get() + ", b=" + b.get());
+        System.out.println();
 
-        java.util.List<Pokemon> team = new java.util.ArrayList<>();
-        team.add(new Pokemon("Bulbasaur", "Grass"));
-        printTeam(team);
+        // Step 7 (challenge)
+        List<Pokemon> team1 = new ArrayList<>();
+        team1.add(pikachu);
+        team1.add(charmander);
+
+        List<BattlePokemon> team2 = new ArrayList<>();
+        team2.add(new BattlePokemon("Bulbasaur", "Grass", 50));
+        team2.add(new BattlePokemon("Charmander", "Fire", 55));
+
+        System.out.println("Team 1:");
+        printTeam(team1);
+        System.out.println();
+
+        System.out.println("Team 2:");
+        printTeam(team2);
     }
 
     public static <T> void swap(Box<T> a, Box<T> b){

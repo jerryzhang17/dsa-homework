@@ -7,7 +7,7 @@ public class PokeBox {
     }
 
     public Pokemon get() {
-        return value;
+        return this.value;
     }
 
     public void set(Pokemon newValue) {

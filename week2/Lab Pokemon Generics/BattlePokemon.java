@@ -8,7 +8,7 @@ public class BattlePokemon extends Pokemon {
     }
 
     public int getHp() {
-        return hp;
+        return this.hp;
     }
 
     @Override

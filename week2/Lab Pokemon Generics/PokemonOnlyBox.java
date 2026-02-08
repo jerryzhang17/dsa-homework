@@ -7,7 +7,7 @@ public class PokemonOnlyBox<T extends Pokemon> {
     }
 
     public T get() {
-        return value;
+        return this.value;
     }
 
     public void set(T newValue) {

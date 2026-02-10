@@ -1,0 +1,1 @@
+Insertion Sort performs best only if the data is increasing or nearly sorted. If it meets those conditions the best time complexity of Insertion Sort is O(n), because each element is compared once and no shifting is required.

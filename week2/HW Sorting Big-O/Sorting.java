@@ -1,37 +1,61 @@
+import java.util.Random;
+
 public class Sorting {
     public static void main(String[] args) {
-        // test cases
-        int[] increasing = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-        int[] random = {7, 3, 9, 1, 5, 2, 8, 6, 4};
-        int[] reverse = {9, 8, 7, 6, 5, 4, 3, 2, 1};
 
-        int[] test = random.clone();
+        int[] sizes = {100, 1000, 10000};
 
-        Metrics metrics = new Metrics();
-        BubbleSort.sort(test, metrics);
-        SelectionSort.sort(test, metrics);
-        InsertionSort.sort(test, metrics);
+        for (int size : sizes) {
 
-        System.out.print("Sorted array: ");
-        for (int num : test) {
-            System.out.print(num + " ");
+        int[] increasing = new int[size];
+        int[] random = new int[size];
+        int[] reverse = new int[size];
+
+        Random rand = new Random();
+
+        for (int i = 0; i < size; i++) {
+            increasing[i] = i;
+            random[i] = rand.nextInt(size);
+            reverse[i] = size - i;
         }
-        System.out.println();
-        System.out.println("Comparisons: " + metrics.comparisons);
-        System.out.println("Swaps: " + metrics.swaps);
 
+        // Change the first parameter to test other arrays.
+        // Bubble
+        Metrics m1 = new Metrics();
+        BubbleSort.sort(random.clone(), m1);
+
+        // Selection
+        Metrics m2 = new Metrics();
+        SelectionSort.sort(random.clone(), m2);
+
+        // Insertion
+        Metrics m3 = new Metrics();
+        InsertionSort.sort(random.clone(), m3);
+
+        System.out.println("Size: " + size + " | Input: Random | Algorithm: Bubble");
+        System.out.println("Comparisons: " + m1.comparisons);
+        System.out.println("Swaps: " + m1.swaps);
+
+        System.out.println("Size: " + size + " | Input: Random | Algorithm: Selection");
+        System.out.println("Comparisons: " + m2.comparisons);
+        System.out.println("Swaps: " + m2.swaps);
+
+        System.out.println("Size: " + size + " | Input: Random | Algorithm: Insertion");
+        System.out.println("Comparisons: " + m3.comparisons);
+        System.out.println("Swaps: " + m3.swaps);
+        }
     }
 
     static class BubbleSort {
-        public static void sort(int[] arr, Metrics metrics) {
+        public static void sort(int[] arr, Metrics m) {
             for (int i = 0; i < arr.length - 1; i++) {
                 for (int j = 0; j < arr.length - i - 1; j++){
-                    metrics.comparisons++;
+                    m.comparisons++;
                     if(arr[j] > arr[j + 1]){
                         int temp = arr[j];
                         arr[j] = arr[j + 1];
                         arr[j + 1] = temp;
-                        metrics.swaps++;
+                        m.swaps++;
                     }
                 }
             }
@@ -39,11 +63,11 @@ public class Sorting {
     }
 
     static class SelectionSort {
-        public static void sort(int[] arr, Metrics metrics) {
+        public static void sort(int[] arr, Metrics m) {
             for (int i = 0; i < arr.length - 1; i++) {
                 int min = i;
                 for (int j = i + 1; j < arr.length; j++) {
-                    metrics.comparisons++;
+                    m.comparisons++;
                     if(arr[j] < arr[min]){
                         min = j;
                     }
@@ -52,24 +76,24 @@ public class Sorting {
                         int temp = arr[i];
                         arr[i] = arr[min];
                         arr[min] = temp;
-                        metrics.swaps++;
+                        m.swaps++;
                 }   
             }
         }
     }
 
     static class InsertionSort {
-        public static void sort(int[] arr, Metrics metrics) {
+        public static void sort(int[] arr, Metrics m) {
             for (int i = 1; i < arr.length; i++) {
                 int key = arr[i];
                 int j = i - 1;
-                metrics.comparisons++;
+                m.comparisons++;
                 while(j >= 0 && arr[j] > key){
                     arr[j + 1] = arr[j];
                     j--;
-                    metrics.swaps++;
+                    m.swaps++;
                     if (j >= 0) {
-                        metrics.comparisons++;
+                        m.comparisons++;
                     }
                 }
                 arr[j + 1] = key;

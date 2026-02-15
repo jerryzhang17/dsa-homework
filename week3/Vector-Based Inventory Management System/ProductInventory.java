@@ -1,4 +1,5 @@
 import java.util.Vector;
+import java.util.Collections;
 
 public class ProductInventory {
 
@@ -17,6 +18,11 @@ public class ProductInventory {
     }
 
     public boolean removeProduct(String productId){
+        if(products.contains(productId)){
+            products.removeAll(Collections.singleton(productId));
+            return true;
+        }
+        return false;
     }
 
     public Product findProduct(String productId){

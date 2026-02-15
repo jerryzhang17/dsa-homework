@@ -2,13 +2,13 @@ import java.util.Vector;
 
 public class Order {
     
-    private String orderId;
-    private String customerName;
-    private String orderDate; // YYYY-MM-DD
-    private Vector<OrderItem> items;
-    private String orderStatus; // "Pending", "Processing", "Shipped", "Delivered", "Cancelled"
+    String orderId;
+    String customerName;
+    String orderDate; // YYYY-MM-DD
+    Vector<OrderItem> items;
+    String orderStatus; // "Pending", "Processing", "Shipped", "Delivered", "Cancelled"
 
-    public Order(String orderId, String customerName, String orderDate, String orderStatus){
+    public Order(String orderId, String customerName, String orderDate){
         this.orderId = orderId;
         this.customerName = customerName;
         this.orderDate = orderDate;
@@ -16,10 +16,8 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-    public void addItems(OrderItem item){
-        if(item != null){
-            items.add(item);
-        }
+    public void addItem(OrderItem item){
+        items.add(item);
     }
 
     public boolean removeItem(String productId){

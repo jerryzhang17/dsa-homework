@@ -40,4 +40,9 @@ public class Product {
         Product that = (Product) obj;
         return this.productId.equals(that.productId);
     }
+
+    @Override
+    public int hashCode() {
+        return productId == null ? 0 : productId.hashCode();
+    }
 }

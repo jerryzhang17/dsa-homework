@@ -1,10 +1,10 @@
 public class OrderItem {
     
-    private String productId;
-    private String productName;
-    private int quantity;
-    private double unitPrice;
-    private double subtotal;
+    String productId;
+    String productName;
+    int quantity;
+    double unitPrice;
+    double subtotal;
 
     public OrderItem(String productId, String productName, int quantity, double unitPrice){
         this.productId = productId;

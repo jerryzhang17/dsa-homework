@@ -8,7 +8,7 @@ public class Order {
     Vector<OrderItem> items;
     String orderStatus; // "Pending", "Processing", "Shipped", "Delivered", "Cancelled"
 
-    public Order(String orderId, String customerName, String orderDate){
+    public Order(String orderId, String customerName, String orderDate, String orderStatus){
         this.orderId = orderId;
         this.customerName = customerName;
         this.orderDate = orderDate;

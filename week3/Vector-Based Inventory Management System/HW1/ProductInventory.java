@@ -1,8 +1,9 @@
+import java.util.Enumeration;
 import java.util.Vector;
 
 public class ProductInventory {
 
-    private Vector<Product> products;
+    Vector<Product> products;
 
     public ProductInventory(){
         products = new Vector<>();
@@ -88,4 +89,26 @@ public class ProductInventory {
         System.out.print(products.size() + " " + products.capacity());
     }
 
+    public void optimizeCapacity(){
+        products.trimToSize();
+    }
+
+    public void ensureCapacity(int minCapacity){
+        products.ensureCapacity(minCapacity);
+    }
+
+    public void printCapacityReport(){
+        System.out.println("Current Size: " + products.size() + " | " + 
+                        "Current Capacity: " + products.capacity() + " | " + 
+                        "Capacity Utilization Percentage: " + ((double)products.size() / products.capacity() * 100) + " | " + 
+                        "Elements Left: " + (products.capacity() - products.size()));
+    }
+
+    public void printProductsUsingEnumeration(){
+        Enumeration<Product> e = products.elements();
+            while (e.hasMoreElements()) {
+                System.out.println(e.nextElement());
+            }
+    }
+    // Enumeration is a legacy interface which vectors were able to use before Java 1.2.
 }

@@ -1,11 +1,11 @@
 public class Product {
 
-    String productId;
-    String name;
-    String category;
-    double price;
-    int quantityInStock;
-    String supplier;
+    private String productId;
+    private String name;
+    private String category;
+    private double price;
+    private int quantityInStock;
+    private String supplier;
 
     public Product(String productId, String name, String category, double price, int quantityInStock, String supplier) {
         this.productId = productId;
@@ -28,7 +28,7 @@ public class Product {
     public void setSupplier(String supplier) {this.supplier = supplier;}
     public void setName(String name) {this.name = name;}
     public void setCategory(String category) {this.category = category;}
-    public void setProductID(String productID, String productId) {this.productId = productId;}
+    public void setProductId(String productId) {this.productId = productId;}
     
     @Override
     public String toString() {

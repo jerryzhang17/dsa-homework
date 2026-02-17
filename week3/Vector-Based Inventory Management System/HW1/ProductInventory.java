@@ -3,7 +3,7 @@ import java.util.Vector;
 
 public class ProductInventory {
 
-    Vector<Product> products;
+    private Vector<Product> products;
 
     public ProductInventory(){
         products = new Vector<>();
@@ -22,7 +22,7 @@ public class ProductInventory {
     public boolean removeProduct(String productId){
         for (int i = 0; i < products.size(); i++) {
             if(products.get(i).getProductId().equals(productId)){
-                products.remove(products.get(i));
+                products.remove(i);
                 return true;
             }
         }
@@ -76,8 +76,9 @@ public class ProductInventory {
     }
 
     public void printAllProducts(){
+        System.out.println("ID | Name | Category | Price | Qty | Supplier");
         for (int i = 0; i < products.size(); i++) {
-            System.out.println(products.get(i) + " | ");
+            System.out.println(products.get(i));
         }
     }
 
@@ -86,7 +87,7 @@ public class ProductInventory {
     }
 
     public void printCapacityInfo(){ 
-        System.out.print(products.size() + " " + products.capacity());
+        System.out.println("Size: " + products.size() + " Capacity: " + products.capacity());
     }
 
     public void optimizeCapacity(){
@@ -98,10 +99,10 @@ public class ProductInventory {
     }
 
     public void printCapacityReport(){
-        System.out.println("Current Size: " + products.size() + " | " + 
-                        "Current Capacity: " + products.capacity() + " | " + 
-                        "Capacity Utilization Percentage: " + ((double)products.size() / products.capacity() * 100) + " | " + 
-                        "Elements Left: " + (products.capacity() - products.size()));
+        System.out.println("Current Size: " + products.size());
+        System.out.println("Current Capacity: " + products.capacity());
+        System.out.println("Capacity Utilization Percentage: " + ((double)products.size() / products.capacity() * 100) + "%");
+        System.out.println("How many elements can be added before resize: " + (products.capacity() - products.size()));
     }
 
     public void printProductsUsingEnumeration(){

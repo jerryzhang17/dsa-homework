@@ -2,7 +2,7 @@ import java.util.Vector;
 
 public class OrderManager {
 
-    Vector<Order> orders;
+    private Vector<Order> orders;
 
     public OrderManager(){
         orders = new Vector<>();
@@ -16,7 +16,7 @@ public class OrderManager {
 
     public Order findOrder(String orderId){
         for (int i = 0; i < orders.size(); i++) {
-            if (orders.get(i).orderId.equals(orderId)) {
+            if (orders.get(i).getOrderId().equals(orderId)) {
                 return orders.get(i);
             }
         }
@@ -26,7 +26,7 @@ public class OrderManager {
     public Vector<Order> getOrdersByStatus(String status){
         Vector<Order> stats = new Vector<>();
         for (int i = 0; i < orders.size(); i++) {
-            if(orders.get(i).orderStatus.equals(status)){
+            if(orders.get(i).getOrderStatus().equals(status)){
                 stats.add(orders.get(i));
             }
         }
@@ -36,7 +36,7 @@ public class OrderManager {
     public Vector<Order> getOrdersByCustomer(String customerName){
         Vector<Order> names = new Vector<>();
         for (int i = 0; i < orders.size(); i++) {
-            if(orders.get(i).customerName.equals(customerName)){
+            if(orders.get(i).getCustomerName().equals(customerName)){
                 names.add(orders.get(i));
             }
         }
@@ -52,8 +52,12 @@ public class OrderManager {
     }
 
     public void cancelOrder(String orderId){
-        if(findOrder(orderId) != null){
-            orders.remove(orderId);
+        for (int i = 0; i < orders.size(); i++) {
+            if(orders.get(i).getOrderId().equals(orderId)){
+                orders.remove(i);
+                System.out.println("Cancelled");
+                return;
+            }
         }
     }
 
@@ -66,12 +70,12 @@ public class OrderManager {
     public Vector<Order> getPendingOrders(){
         Vector<Order> pending = new Vector<>();
             for (int i = 0; i < orders.size(); i++) {
-                if(orders.get(i).orderStatus.equals("Pending")){
+                if(orders.get(i).getOrderStatus().equals("Pending")){
                     pending.add(orders.get(i));
                 }
-            }
-            return pending;
         }
+        return pending;
+    }
 
     public int getOrderCount(){
         return orders.size();

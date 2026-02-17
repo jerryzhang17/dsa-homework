@@ -1,10 +1,10 @@
 public class OrderItem {
     
-    String productId;
-    String productName;
-    int quantity;
-    double unitPrice;
-    double subtotal;
+    private String productId;
+    private String productName;
+    private int quantity;
+    private double unitPrice;
+    private double subtotal;
 
     public OrderItem(String productId, String productName, int quantity, double unitPrice){
         this.productId = productId;
@@ -35,5 +35,4 @@ public class OrderItem {
         subtotal = this.quantity * this.unitPrice;
         return subtotal;
     }
-
 }

@@ -6,7 +6,7 @@ public class Student {
     String email;
     double gpa;
     String major;
-    int year;
+    int year; // 1 = Freshman, 2 = Sophomore, 3 = Junior, 4 = Senior
 
     public Student(String studentId, String firstName, String lastName, String email, double gpa, String major, int year){
         this.studentId = studentId;
@@ -36,5 +36,14 @@ public class Student {
 
     public String toString() { return studentId + " " + firstName + " " + lastName + " " + email + " " + gpa + " " + major + " " + year; }
 
-    
+    public boolean equals(Object obj){
+        if(obj == null || !(obj instanceof Student)) return false;
+        Student that = (Student) obj;
+        return this.studentId.equals(that.studentId);
+    }
+
+    @Override
+    public int hashCode() {
+        return studentId == null ? 0 : studentId.hashCode();
+    }
 }

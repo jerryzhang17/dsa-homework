@@ -2,11 +2,11 @@ import java.util.Vector;
 
 public class Order {
     
-    String orderId;
-    String customerName;
-    String orderDate; // YYYY-MM-DD
-    Vector<OrderItem> items;
-    String orderStatus; // "Pending", "Processing", "Shipped", "Delivered", "Cancelled"
+    private String orderId;
+    private String customerName;
+    private String orderDate; // YYYY-MM-DD
+    private Vector<OrderItem> items;
+    private String orderStatus; // "Pending", "Processing", "Shipped", "Delivered", "Cancelled"
 
     public Order(String orderId, String customerName, String orderDate, String orderStatus){
         this.orderId = orderId;
@@ -15,6 +15,16 @@ public class Order {
         this.items = new Vector<>();
         this.orderStatus = orderStatus;
     }
+
+    public String getOrderId(){return orderId;}
+    public String getCustomerName(){return customerName;}
+    public String getOrderDate(){return orderDate;}
+    public String getOrderStatus(){return orderStatus;}
+
+    public void setOrderId(String orderId){this.orderId=orderId;}
+    public void setCustomerName(String customerName){this.customerName=customerName;}
+    public void setOrderDate(String orderDate){this.orderDate=orderDate;}
+    public void setOrderStatus(String orderStatus){this.orderStatus=orderStatus;}
 
     public void addItem(OrderItem item){
         items.add(item);
@@ -42,13 +52,17 @@ public class Order {
     public double calculateTotal(){
         double total = 0;
         for (int i = 0; i < items.size(); i++) {
-            total += items.get(i).getUnitPrice();
+            total += items.get(i).getUnitPrice() * items.get(i).getQuantity();
         }
         return total;
     }
 
     public int getTotalItems(){
-        return items.size();
+        int quantity = 0;
+        for (int i = 0; i < items.size(); i++) {
+            quantity += items.get(i).getQuantity();
+        }
+        return quantity;
     }
 
     public void updateStatus(String newStatus){

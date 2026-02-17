@@ -1,4 +1,3 @@
-import java.util.Vector;
 
 public class InventorySystemMain {
 
@@ -14,19 +13,8 @@ public class InventorySystemMain {
         inventory.addProduct(p2);
         inventory.addProduct(p3);
 
-        inventory.printAllProducts();
-        inventory.printCapacityInfo();
-
         System.out.println("Find product P200:");
         System.out.println(inventory.findProduct("P200"));
-
-        System.out.println("Low stock products (< 5):");
-        for (Product p : inventory.getLowStockProducts(5)) {
-            System.out.println(p);
-        }
-
-        System.out.println("Total inventory value:");
-        System.out.println(inventory.getTotalInventoryValue());
 
         inventory.removeProduct("P300");
         System.out.println("After removing P300:");
@@ -44,24 +32,7 @@ public class InventorySystemMain {
         System.out.println("Order details:");
         order1.printOrder();
 
-        System.out.println("Order total:");
-        System.out.println(order1.calculateTotal());
-
         order1.updateStatus("Processing");
         System.out.println("Updated order status.");
-
-        Vector<Integer> numbers = new Vector<>();
-        numbers.add(10);
-        numbers.add(5);
-        numbers.add(30);
-
-        System.out.println("Max number: " + VectorUtils.findMax(numbers));
-
-        Vector<String> words = new Vector<>();
-        words.add("apple");
-        words.add("zebra");
-        words.add("banana");
-
-        System.out.println("Max word: " + VectorUtils.findMax(words));
     }
 }

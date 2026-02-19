@@ -1,12 +1,12 @@
 public class Student {
     
-    String studentId;
-    String firstName;
-    String lastName;
-    String email;
-    double gpa;
-    String major;
-    int year; // 1 = Freshman, 2 = Sophomore, 3 = Junior, 4 = Senior
+    private String studentId;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private double gpa;
+    private String major;
+    private int year; // 1 = Freshman, 2 = Sophomore, 3 = Junior, 4 = Senior
 
     public Student(String studentId, String firstName, String lastName, String email, double gpa, String major, int year){
         this.studentId = studentId;
@@ -34,8 +34,10 @@ public class Student {
     public void setMajor(String major) { this.major = major; }
     public void setYear(int year) { this.year = year; }
 
+    @Override
     public String toString() { return studentId + " " + firstName + " " + lastName + " " + email + " " + gpa + " " + major + " " + year; }
 
+    @Override
     public boolean equals(Object obj){
         if(obj == null || !(obj instanceof Student)) return false;
         Student that = (Student) obj;

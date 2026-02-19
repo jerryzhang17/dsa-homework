@@ -1,3 +1,4 @@
+import java.util.Vector;
 
 public class InventorySystemMain {
 
@@ -18,8 +19,15 @@ public class InventorySystemMain {
 
         inventory.removeProduct("P300");
         System.out.println("After removing P300:");
+
+        System.out.println("Inventory Report");
         inventory.printAllProducts();
 
+        System.out.println("Vector Capacity Management:");
+
+        inventory.printCapacityReport();
+        inventory.optimizeCapacity();
+        inventory.printCapacityReport();
 
         OrderManager orderManager = new OrderManager();
 
@@ -29,10 +37,24 @@ public class InventorySystemMain {
 
         orderManager.addOrder(order1);
 
-        System.out.println("Order details:");
+        System.out.println("Order Report:");
         order1.printOrder();
 
         order1.updateStatus("Processing");
         System.out.println("Updated order status.");
+
+        Vector<Integer> numbers = new Vector<>();
+        numbers.add(10);
+        numbers.add(20);
+        numbers.add(30);
+
+        System.out.println("Generic Utility Methods:");
+        System.out.println("Sum: " + VectorUtils.sumNumbers(numbers));
+        System.out.println("Average: " + VectorUtils.averageNumbers(numbers));
+
+        VectorUtils.swap(numbers, 0, 2);
+        System.out.println("After swap: " + numbers);
+
+        System.out.println("Max value: " + VectorUtils.findMax(numbers));
     }
 }

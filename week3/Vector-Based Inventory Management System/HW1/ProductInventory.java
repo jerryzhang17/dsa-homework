@@ -16,8 +16,8 @@ public class ProductInventory {
                 return;
             }
         }
-    products.add(product);
-}
+        products.add(product);
+    }
 
     public boolean removeProduct(String productId){
         for (int i = 0; i < products.size(); i++) {
@@ -106,10 +106,12 @@ public class ProductInventory {
     }
 
     public void printProductsUsingEnumeration(){
-        Enumeration<Product> e = products.elements();
-            while (e.hasMoreElements()) {
-                System.out.println(e.nextElement());
+        Enumeration<Product> enumeration = products.elements();
+            while (enumeration.hasMoreElements()) {
+                System.out.println(enumeration.nextElement());
             }
     }
-    // Enumeration is a legacy interface which vectors were able to use before Java 1.2.
+    // Enumeration is a legacy interface only can be used with vectors and hashtables before Java 1.2.
+    // Used with older codebases and older APIs.
+    // Iterator can use the operation remove() and works with all collections.
 }

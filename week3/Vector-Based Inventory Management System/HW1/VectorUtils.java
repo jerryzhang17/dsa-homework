@@ -1,6 +1,7 @@
 import java.util.Vector;
 
 public class VectorUtils {
+
     public static <T> void swap(Vector<T> vec, int index1, int index2){
         T temp = vec.get(index1);
         vec.set(index1, vec.get(index2));
@@ -72,5 +73,4 @@ public class VectorUtils {
         System.out.println("Sum: " + VectorUtils.sumNumbers(ints));  // 60.0
         System.out.println("Average: " + VectorUtils.averageNumbers(ints));  // 20.0
     }
-
 }

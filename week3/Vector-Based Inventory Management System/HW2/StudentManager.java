@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class StudentManager {
     
-    ArrayList<Student> students;
+    private ArrayList<Student> students;
 
     public StudentManager() {
         students = new ArrayList<>();

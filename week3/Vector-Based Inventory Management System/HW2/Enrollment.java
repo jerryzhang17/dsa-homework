@@ -6,12 +6,12 @@ public class Enrollment {
     private String grade; // A, B, C, D, F, null
     private String semester; // Fall/Spring Year
 
-    public Enrollment(String courseCode, String enrollmentId, String grade, String semester, String studentId) {
+    public Enrollment(String studentId, String courseCode, String semester, String enrollmentId, String grade) {
+        this.studentId = studentId;
         this.courseCode = courseCode;
+        this.semester = semester;
         this.enrollmentId = enrollmentId;
         this.grade = grade;
-        this.semester = semester;
-        this.studentId = studentId;
     }
 
     public String getEnrollmentId() { return enrollmentId; }
@@ -33,16 +33,17 @@ public class Enrollment {
 
     public double getGradePoints(){
     if (grade == null) return 0.0;
-        switch (grade) {
-            case "A": return 4.0;
-            case "B": return 3.0;
-            case "C": return 2.0;
-            case "D": return 1.0;
-            default:  return 0.0;
-        }
+        return switch (grade) {
+            case "A" -> 4.0;
+            case "B" -> 3.0;
+            case "C" -> 2.0;
+            case "D" -> 1.0;
+            default -> 0.0;
+        };
     }
 
     public boolean isPassing(){
-        if(grade.equals("A"))
+        if(grade == null) return false;
+        return !grade.equals("F");
     }
 }

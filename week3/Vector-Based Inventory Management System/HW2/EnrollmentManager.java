@@ -9,8 +9,10 @@ public class EnrollmentManager {
     }
 
     public void enrollStudent(String studentId, String courseCode, String semester) {
-        Enrollment enrollment = new Enrollment(studentId, courseCode, semester, "", "");
-        enrollments.add(enrollment);
+        if(getEnrollmentCount(courseCode) <= enrollments.size()){
+            Enrollment enrollment = new Enrollment(studentId, courseCode, semester, "", "");
+            enrollments.add(enrollment);
+        }
     }
 
     public boolean dropEnrollment(String enrollmentId){
@@ -32,6 +34,7 @@ public class EnrollmentManager {
         return null;
     }
 
+    // Needs to handle cases for students with no enrollment.
     public ArrayList<Enrollment> getEnrollmentsByStudent(String studentId){
         ArrayList<Enrollment> students = new ArrayList<>();
         for(Enrollment e : enrollments){
@@ -61,6 +64,37 @@ public class EnrollmentManager {
     }
 
     public double calculateStudentGpa(String studentId){
-        
+        for(Enrollment e : enrollments){
+            if(e.getStudentId().equals(studentId)){
+                return e.getGradePoints();
+            }
+        }
+        return 0.0;
+    }
+
+    public ArrayList<String> getStudentsInCourse(String courseCode){
+        ArrayList<String> students = new ArrayList<>();
+        for(Enrollment e : enrollments){
+            if(e.getCourseCode().equals(courseCode)){
+                students.add(e.getStudentId());
+            }
+        }
+        return students;
+    }
+
+    public int getEnrollmentCount(String courseCode){
+        int count = 0;
+        for(Enrollment e : enrollments){
+            if(e.getCourseCode().equals(courseCode)){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public void printAllEnrollments(){
+        for(Enrollment e : enrollments){
+            System.out.print(e + " ");
+        }
     }
 }

@@ -48,4 +48,8 @@ public class Student {
     public int hashCode() {
         return studentId == null ? 0 : studentId.hashCode();
     }
+
+    public String getFullName(){
+        return this.firstName + " " + this.lastName;
+    }
 }

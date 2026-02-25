@@ -9,6 +9,7 @@ public class StudentManager {
     }
     
     public void addStudent(Student student){
+        if(student == null) return;
         for (Student s : students){
             if (s.getStudentId().equals(student.getStudentId())) {
                 System.out.println("Duplicate student");
@@ -68,27 +69,26 @@ public class StudentManager {
     }
 
     public double getAverageGpa(){
-        double avg = 0;
-        double total = 0;
+        if(students.isEmpty()) return 0.0;
 
+        double total = 0;
         for(Student s : students){
             total += s.getGpa();
-            avg = total / students.size();
         }
-        return avg;
+        return total / students.size();
     }
 
     public double getAverageGpaByMajor(String major){
-        double avg = 0;
         double total = 0;
-
+        int count = 0;
         for(Student s : students){
             if(s.getMajor().equals(major)){
                 total += s.getGpa();
-                avg = total / students.size();
+                count++;
             }
         }
-        return avg;
+        if(count == 0) return 0.0;
+        return total / count;
     }
 
     public void printAllStudents(){
@@ -105,7 +105,9 @@ public class StudentManager {
         ArrayList<String> majors = new ArrayList<>();
 
         for(Student s : students){
-            majors.add(s.getMajor());
+            if(!majors.contains(s.getMajor())){
+                majors.add(s.getMajor());
+            }
         }
         return majors;
     }

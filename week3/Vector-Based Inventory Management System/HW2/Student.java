@@ -13,8 +13,10 @@ public class Student {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        if(gpa < 0 || gpa > 4) throw new IllegalArgumentException("GPA must be between 0 and 4");
         this.gpa = gpa;
         this.major = major;
+        if(year < 1 || year > 4) throw new IllegalArgumentException("Year must be between 1 and 4");
         this.year = year;
     }
 
@@ -30,17 +32,27 @@ public class Student {
     public void setFirstName(String firstName) { this.firstName = firstName; }
     public void setLastName(String lastName) { this.lastName = lastName; }
     public void setEmail(String email) { this.email = email; }
-    public void setGpa(double gpa) { this.gpa = gpa; }
+    public void setGpa(double gpa) { 
+        if(gpa < 0 || gpa > 4) throw new IllegalArgumentException("GPA must be between 0 and 4");
+        this.gpa = gpa; }
     public void setMajor(String major) { this.major = major; }
-    public void setYear(int year) { this.year = year; }
+    public void setYear(int year) { 
+        if(year < 1 || year > 4) throw new IllegalArgumentException("Year must be between 1 and 4");
+        this.year = year; }
 
     @Override
-    public String toString() { return studentId + " " + firstName + " " + lastName + " " + email + " " + gpa + " " + major + " " + year; }
+    public String toString() {
+        return "Student {" + "studentId='" + studentId + '\'' + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + 
+                ", email='" + email + '\'' + ", gpa=" + gpa + ", major='" + major + '\'' + ", year=" + year + '}';
+    }
 
     @Override
     public boolean equals(Object obj){
-        if(obj == null || !(obj instanceof Student)) return false;
+        if(this == obj) return true;
+        if(obj == null) return false;
+        if(!(obj instanceof Student)) return false;
         Student that = (Student) obj;
+        if (this.studentId == null || that.studentId == null) return false;
         return this.studentId.equals(that.studentId);
     }
 

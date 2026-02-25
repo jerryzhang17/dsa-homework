@@ -9,8 +9,11 @@ public class Enrollment {
     public Enrollment(String studentId, String courseCode, String semester, String enrollmentId, String grade) {
         this.studentId = studentId;
         this.courseCode = courseCode;
+        if(!semester.equalsIgnoreCase("Fall") && !semester.equalsIgnoreCase("Spring")) throw new IllegalArgumentException("Invalid Semester");
         this.semester = semester;
         this.enrollmentId = enrollmentId;
+        if (grade != null && !grade.equals("A") && !grade.equals("B") && !grade.equals("C") && !grade.equals("D") && !grade.equals("F")) 
+            throw new IllegalArgumentException("Invalid Grade");
         this.grade = grade;
     }
 
@@ -23,12 +26,15 @@ public class Enrollment {
     public void setEnrollmentId(String enrollmentId) { this.enrollmentId = enrollmentId; }
     public void setStudentId(String studentId) { this.studentId = studentId; }
     public void setCourseCode(String courseCode) { this.courseCode = courseCode; }
-    public void setGrade(String grade) { this.grade = grade; }
-    public void setSemester(String semester) { this.semester = semester; }
+    public void setGrade(String grade) { if (grade != null && !grade.equals("A") && !grade.equals("B") && !grade.equals("C") && !grade.equals("D") && !grade.equals("F")) 
+            throw new IllegalArgumentException("Invalid Grade"); 
+        this.grade = grade; }
+    public void setSemester(String semester) { if(!semester.equalsIgnoreCase("Fall") && !semester.equalsIgnoreCase("Spring")) throw new IllegalArgumentException("Invalid Semester");
+        this.semester = semester; }
 
     @Override
     public String toString(){
-        return enrollmentId + " " + studentId + " " + courseCode + " " + grade + " " + semester;
+        return "Enrollment {" + "enrollmentId='" + enrollmentId + "' , studentId='" + studentId + "' , courseCode='" + courseCode + "' , grade='" + grade + "' , semester='" + semester + "'}";
     }
 
     public double getGradePoints(){

@@ -20,12 +20,32 @@ public class CourseManager {
         return null;
     }
 
-    public ArrayList<Course> getCoursesByInstructor(String instructor){
+    // public ArrayList<Course> getCoursesByInstructor(String instructor){
+    //     for(Course c : courses){
+    //         if(c.getInstructor().equals(instructor)){
+    //             return c.getCourseName();
+    //         }
+    //     }
+    //     return null;
+    // }
+
+    // help.
+    public ArrayList<Course> getAvailableCourses(String studentId, StudentManager studentManager, EnrollmentManager enrollmentManager){
+        ArrayList<Course> available = new ArrayList<>();
+        Student student = studentManager.findStudent(studentId);
+        if(student == null) return available;
+
+        ArrayList<Enrollment> enrollments = enrollmentManager.getEnrollmentsByStudent(studentId);
+        return available;
+    }
+
+    public void printAllCourses(){
         for(Course c : courses){
-            if(c.getInstructor().equals(instructor)){
-                return c.getCourseName();
-            }
+            System.out.println(c.getCourseName());
         }
-        return null;
+    }
+
+    public int getTotalCourses(){
+        return courses.size();
     }
 }

@@ -12,8 +12,10 @@ public class Course {
     public Course(String courseCode, String courseName, int credits, String instructor, int maxEnrollment) {
         this.courseCode = courseCode;
         this.courseName = courseName;
+        if (credits <= 0) throw new IllegalArgumentException("Credits must be greater than 0");
         this.credits = credits;
         this.instructor = instructor;
+        if (maxEnrollment <= 0) throw new IllegalArgumentException("Max enrollment must be greater than 0");
         this.maxEnrollment = maxEnrollment;
         prerequisites = new ArrayList<>();
     }
@@ -26,18 +28,23 @@ public class Course {
 
     public void setCourseCode(String courseCode) { this.courseCode = courseCode; }
     public void setCourseName(String courseName) { this.courseName = courseName; }
-    public void setCredits(int credits) { this.credits = credits; }
+    public void setCredits(int credits) {
+        if (credits <= 0) throw new IllegalArgumentException("Credits must be greater than 0");
+            this.credits = credits; }
     public void setInstructor(String instructor) { this.instructor = instructor; }
-    public void setMaxEnrollment(int maxEnrollment) { this.maxEnrollment = maxEnrollment; }
+    public void setMaxEnrollment(int maxEnrollment) {
+        if (maxEnrollment <= 0) throw new IllegalArgumentException("Max enrollment must be greater than 0");
+            this.maxEnrollment = maxEnrollment;}
 
     @Override
-    public String toString() { return courseCode + " " + courseName + " " + credits + " " + instructor + " " + maxEnrollment + " " + prerequisites; }
+    public String toString() { return "Course {" + "courseCode='" + courseCode + '\'' + ", courseName='" + courseName + '\'' + ", credits=" + credits + 
+                ", instructor='" + instructor + '\'' + ", maxEnrollment=" + maxEnrollment + '}';}
 
-    public void addPrerequisites(String courseCode) {
+    public void addPrerequisite(String courseCode) {
         if(courseCode != null) prerequisites.add(courseCode);
     }
 
-    public boolean hasPrerequisites(String courseCode){
+    public boolean hasPrerequisite(String courseCode){
         return prerequisites.contains(courseCode);
     }
 

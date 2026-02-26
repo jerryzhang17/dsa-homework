@@ -20,22 +20,35 @@ public class CourseManager {
         return null;
     }
 
-    // public ArrayList<Course> getCoursesByInstructor(String instructor){
-    //     for(Course c : courses){
-    //         if(c.getInstructor().equals(instructor)){
-    //             return c.getCourseName();
-    //         }
-    //     }
-    //     return null;
-    // }
+    public ArrayList<Course> getCoursesByInstructor(String instructor){
+        ArrayList<Course> course = new ArrayList<>();
+        for(Course c : courses){
+            if(c.getInstructor().equals(instructor)){
+                course.add(c);
+            }
+        }
+        return course;
+    }
 
-    // help.
     public ArrayList<Course> getAvailableCourses(String studentId, StudentManager studentManager, EnrollmentManager enrollmentManager){
         ArrayList<Course> available = new ArrayList<>();
         Student student = studentManager.findStudent(studentId);
         if(student == null) return available;
 
         ArrayList<Enrollment> enrollments = enrollmentManager.getEnrollmentsByStudent(studentId);
+
+        for(Course c : courses){
+            boolean alreadyEnrolled = false;
+            for(Enrollment e : enrollments){
+                if(e.getCourseCode().equals(c.getCourseCode())){
+                    alreadyEnrolled = true;
+                    break;
+                }
+            }
+            if(!alreadyEnrolled){
+                available.add(c);
+            }
+        }
         return available;
     }
 

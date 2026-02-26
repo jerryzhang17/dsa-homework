@@ -26,6 +26,7 @@ public class ArrayListVsArrayDemo {
         Student[] newArray = new Student[array.length - 1];
 
         System.arraycopy(array, 0, newArray, 0, targetIndexRemove);
+        System.arraycopy(array, targetIndexRemove + 1, newArray, targetIndexRemove, array.length - targetIndexRemove - 1);
         System.out.println(Arrays.toString(newArray));
 
         // Arraylist auto adjusts to the new size when adding or removing.
@@ -37,7 +38,7 @@ public class ArrayListVsArrayDemo {
 
         // Performance
         System.out.println("\nPerformance:");
-        ArrayList<Student> timeArrayList = new ArrayList<>();
+        ArrayList<Student> timeArrayList = new ArrayList<>(10000);
         Student[] timeArray = new Student[10000];
         Student student = new Student("", "", "", "", 3.5, "Major", 4);
         

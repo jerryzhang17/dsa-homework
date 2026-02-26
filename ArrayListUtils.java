@@ -9,6 +9,7 @@ public class ArrayListUtils {
     }
 
     public static <T extends Comparable<T>> T findMax(ArrayList<T> list){
+        if (list == null || list.isEmpty()) throw new IllegalArgumentException("List cannot be empty");
         T max =  list.get(0);
         for(T s : list){
             if(s.compareTo(max) > 0){
@@ -62,6 +63,7 @@ public class ArrayListUtils {
     }
 
     public static <T extends Number> double average(ArrayList<T> numbers){
+        if (numbers.isEmpty()) return 0.0;
         double total = 0;
         for (int i = 0; i < numbers.size(); i++) {
             total += numbers.get(i).doubleValue();

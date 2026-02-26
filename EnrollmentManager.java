@@ -2,23 +2,22 @@ import java.util.ArrayList;
 
 public class EnrollmentManager {
 
-    private ArrayList<Enrollment> enrollments;
+    private final ArrayList<Enrollment> enrollments;
 
     public EnrollmentManager() {
         enrollments = new ArrayList<>();
     }
 
     public void enrollStudent(String studentId, String courseCode, String semester) {
-        if(getEnrollmentCount(courseCode) <= enrollments.size()){
-            Enrollment enrollment = new Enrollment(studentId, courseCode, semester, "", "");
-            enrollments.add(enrollment);
-        }
+        String enrollmentId = "S" + (enrollments.size() + 1);
+        Enrollment enrollment = new Enrollment(studentId, courseCode, semester, enrollmentId, null);
+        enrollments.add(enrollment);
     }
 
     public boolean dropEnrollment(String enrollmentId){
-        for(Enrollment e : enrollments){
-            if(e.getEnrollmentId().equals(enrollmentId)){
-                enrollments.remove(e);
+        for (int i = 0; i < enrollments.size(); i++) {
+            if(enrollments.get(i).getEnrollmentId().equals(enrollmentId)) {
+                enrollments.remove(i);
                 return true;
             }
         }
@@ -34,7 +33,6 @@ public class EnrollmentManager {
         return null;
     }
 
-    // Needs to handle cases for students with no enrollment.
     public ArrayList<Enrollment> getEnrollmentsByStudent(String studentId){
         ArrayList<Enrollment> students = new ArrayList<>();
         for(Enrollment e : enrollments){
@@ -59,24 +57,34 @@ public class EnrollmentManager {
         for(Enrollment e : enrollments){
             if(e.getEnrollmentId().equals(enrollmentId)){
                 e.setGrade(grade);
+                return;
             }
         }
     }
 
     public double calculateStudentGpa(String studentId){
-        for(Enrollment e : enrollments){
-            if(e.getStudentId().equals(studentId)){
-                return e.getGradePoints();
+        double totalPoints = 0.0;
+        int count = 0;
+
+        for (Enrollment e : enrollments) {
+            if (e.getStudentId().equals(studentId) && e.getGrade() != null) {
+                totalPoints += e.getGradePoints();
+                count++;
             }
         }
-        return 0.0;
+
+        if (count == 0) return 0.0;
+        return totalPoints / count;
     }
 
     public ArrayList<String> getStudentsInCourse(String courseCode){
         ArrayList<String> students = new ArrayList<>();
-        for(Enrollment e : enrollments){
-            if(e.getCourseCode().equals(courseCode)){
-                students.add(e.getStudentId());
+        for (Enrollment e : enrollments) {
+            if (e.getCourseCode().equals(courseCode)) {
+                String studentId = e.getStudentId();
+                if (!students.contains(studentId)) {
+                    students.add(studentId);
+                }
             }
         }
         return students;

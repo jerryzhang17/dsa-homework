@@ -40,7 +40,7 @@ public class ArrayListOperationsDemo {
             new Student("3903497", "Linda", "Garcia", "linda.garcia@email.com", 3.8, "Art", 3)
         ));
 
-        Student[] studentArray = studentArrayL.toArray(new Student[0]);
+        Student[] studentArray = studentArrayL.toArray(new Student[studentArrayL.size()]);
 
         System.out.println("ArrayList: " + studentArrayL);
         System.out.println("Array: " + Arrays.toString(studentArray));

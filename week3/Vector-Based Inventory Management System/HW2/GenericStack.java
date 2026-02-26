@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class GenericStack<T> {
     
-    private ArrayList<T> items = new ArrayList<>();
+    private final ArrayList<T> items = new ArrayList<>();
 
     public void push(T item){
         items.add(item);

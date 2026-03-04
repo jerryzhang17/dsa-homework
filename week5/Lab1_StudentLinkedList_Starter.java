@@ -10,10 +10,9 @@ public class Lab1_StudentLinkedList_Starter {
         public Student(String name, String studentId, double gpa){
             this.name = name;
             this.studentId = studentId;
-            if(gpa < 0 || gpa > 4){ throw new IllegalArgumentException("Invalid Gpa");
-            }else{
-                this.gpa = gpa;
-            }
+            if(gpa < 0 || gpa > 4) throw new IllegalArgumentException("Invalid Gpa");
+            this.gpa = gpa;
+
         }
 
         // TODO: Add getters and setters
@@ -24,10 +23,8 @@ public class Lab1_StudentLinkedList_Starter {
         public void setName(String name) { this.name = name; }
         public void setStudentId(String studentId) { this.studentId = studentId; }
         public void setGpa(double gpa) { 
-            if(gpa < 0 || gpa > 4){ throw new IllegalArgumentException("Invalid Gpa");
-            }else{
+            if(gpa < 0 || gpa > 4) throw new IllegalArgumentException("Invalid Gpa");
             this.gpa = gpa; 
-            }
         }
 
         // TODO: Add toString() method

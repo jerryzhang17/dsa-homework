@@ -18,13 +18,15 @@ public class Pair<K, V> {
 
     @Override
     public String toString(){
-        return first + " " + second;
+        return "(" + first + " " + second + ")";
     }
 
     @Override
     public boolean equals(Object obj){
-        if(obj == null || !(obj instanceof Pair)) return false;
+        if (this == obj) return true;
+        if (!(obj instanceof Pair<?, ?>)) return false;
         Pair<?, ?> that = (Pair<?, ?>) obj;
+
         return this.first.equals(that.first) && this.second.equals(that.second);
     }
 
@@ -37,7 +39,7 @@ public class Pair<K, V> {
         ArrayList<Pair<String, Double>> pairs = new ArrayList<>();
         pairs.add(new Pair<>("DSA", 4.0));
         ArrayList<Pair<Student, Course>> enrollments = new ArrayList<>();
-        enrollments.add(new Pair<>(new Student("", "", "", "", 0.0, "", 3), new Course("DSA", "Data Structures", 3, "CS", 4)));
+        enrollments.add(new Pair<>(new Student("", "", "", "", 0.0, "", 3), new Course("DSA", "Data Structures", 3, "Teacher", 4)));
         System.out.println(pairs);
         System.out.println(enrollments);
     }

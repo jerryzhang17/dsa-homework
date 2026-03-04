@@ -2,7 +2,11 @@ import java.util.ArrayList;
 
 public class GenericList<T>{
     
-    private ArrayList<T> items;
+    private final ArrayList<T> items;
+
+    public GenericList() {
+        items = new ArrayList<>();
+    }
 
     public void add(T item){
         items.add(item);

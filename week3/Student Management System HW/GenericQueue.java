@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class GenericQueue<T> {
     
-    ArrayList<T> items = new ArrayList<>();
+    private final ArrayList<T> items = new ArrayList<>();
 
     public void enqueue(T item){
         items.add(item);

@@ -65,4 +65,7 @@ public class Task {
     public enum Priority {
         LOW, MEDIUM, HIGH
     }
+
+    @Column(nullable = false)
+    private Boolean deleted = false;
 }

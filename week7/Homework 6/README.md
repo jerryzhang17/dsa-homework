@@ -303,4 +303,4 @@ Searches both `title` and `description` fields (case-insensitive).
 
 ## Video
 
-[Add your video link here]
+[https://www.youtube.com/watch?v=zAjPOQ8pFWQ](https://www.youtube.com/watch?v=zAjPOQ8pFWQ)

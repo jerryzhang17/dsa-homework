@@ -1,21 +1,19 @@
 # Campus Taskboard API
 
-A RESTful task management API built with Spring Boot, Spring Data JPA, and H2 for managing campus tasks with database persistence.
+A RESTful task management API built with Spring Boot, Spring Data JPA, and H2. Features robust exception handling, DTOs, soft delete, request logging, and health monitoring.
 
 ---
 
 ## How to Run
 
 **Requirements:**
-- Java 21 or higher installed
+- Java 21 or higher
 - Maven installed
-
 **Steps:**
 
 1. Clone or download the project
 2. Open a terminal in the project root directory
 3. Run the application:
-
 ```bash
 mvn spring-boot:run
 ```
@@ -30,12 +28,33 @@ Access the in-memory database directly at:
 
 `http://localhost:8080/h2-console`
 
-| Field | Value |
-|-------|-------|
-| JDBC URL | `jdbc:h2:mem:taskboarddb` |
-| Username | `sa` |
-| Password | *(leave blank)* |
+| Field    | Value                      |
+|----------|----------------------------|
+| JDBC URL | `jdbc:h2:mem:taskboarddb`  |
+| Username | `sa`                       |
+| Password | *(leave blank)*            |
 
+---
+
+## New Features (Homework 7)
+
+### Exception Handling
+- Custom exceptions: `TaskNotFoundException`, `InvalidTaskDataException`
+- Global exception handler with `@RestControllerAdvice`
+- Consistent error responses with timestamp, status, error, message, and path
+### DTOs (Data Transfer Objects)
+- `TaskRequest` — validates incoming data from the client
+- `TaskResponse` — controls what fields are returned to the client (hides internal fields like `deleted`)
+### Soft Delete
+- Tasks are never permanently removed from the database
+- `DELETE /api/tasks/{id}` sets `deleted = true`
+- `GET /api/tasks` only returns non-deleted tasks
+- `PUT /api/tasks/{id}/restore` restores a deleted task
+### Request Logging
+- Every request is logged with method, URI, status code, and duration
+- Logs appear in the terminal when the app is running
+### Health Monitoring
+- Actuator health endpoint available at `/actuator/health`
 ---
 
 ## API Endpoints
@@ -46,7 +65,9 @@ Access the in-memory database directly at:
 
 ### Get All Tasks
 
-`GET http://localhost:8080/api/tasks`
+`GET /api/tasks`
+
+Returns only non-deleted tasks.
 
 **Response:** `200 OK`
 
@@ -58,8 +79,8 @@ Access the in-memory database directly at:
     "description": "Review chapters 1-5",
     "completed": false,
     "priority": "MEDIUM",
-    "createdAt": "2026-04-14T18:20:54",
-    "updatedAt": "2026-04-14T18:20:54"
+    "createdAt": "2026-04-30T21:00:00",
+    "updatedAt": "2026-04-30T21:00:00"
   }
 ]
 ```
@@ -68,93 +89,73 @@ Access the in-memory database directly at:
 
 ### Get Task by ID
 
-`GET http://localhost:8080/api/tasks/{id}`
+`GET /api/tasks/{id}`
 
 **Response:** `200 OK`
 
+Returns `404 Not Found` if the task does not exist.
+
 ```json
 {
-    "id": 1,
-    "title": "Study for midterm",
-    "description": "Review chapters 1-5",
-    "completed": false,
-    "priority": "MEDIUM",
-    "createdAt": "2026-04-14T18:20:54",
-    "updatedAt": "2026-04-14T18:20:54"
+  "id": 1,
+  "title": "Study for midterm",
+  "description": "Review chapters 1-5",
+  "completed": false,
+  "priority": "MEDIUM",
+  "createdAt": "2026-04-30T21:00:00",
+  "updatedAt": "2026-04-30T21:00:00"
 }
 ```
-
-Returns `404 Not Found` if the task does not exist.
 
 ---
 
 ### Create a Task
 
-`POST http://localhost:8080/api/tasks`
+`POST /api/tasks`
 
 **Request Body:**
 
 ```json
 {
-    "title": "Study for midterm",
-    "description": "Review chapters 1-5",
-    "completed": false,
-    "priority": "MEDIUM"
+  "title": "Study for midterm",
+  "description": "Review chapters 1-5",
+  "completed": false,
+  "priority": "MEDIUM"
 }
 ```
 
 **Response:** `201 Created`
 
-```json
-{
-    "id": 1,
-    "title": "Study for midterm",
-    "description": "Review chapters 1-5",
-    "completed": false,
-    "priority": "MEDIUM",
-    "createdAt": "2026-04-14T18:20:54",
-    "updatedAt": "2026-04-14T18:20:54"
-}
-```
+Returns `400 Bad Request` if validation fails (e.g. missing title, title too short).
 
 ---
 
 ### Update a Task
 
-`PUT http://localhost:8080/api/tasks/{id}`
+`PUT /api/tasks/{id}`
 
 **Request Body:**
 
 ```json
 {
-    "title": "Study for midterm",
-    "description": "Review chapters 1-5",
-    "completed": true,
-    "priority": "HIGH"
+  "title": "Study for midterm",
+  "description": "Review chapters 1-5",
+  "completed": true,
+  "priority": "HIGH"
 }
 ```
 
 **Response:** `200 OK`
 
-```json
-{
-    "id": 1,
-    "title": "Study for midterm",
-    "description": "Review chapters 1-5",
-    "completed": true,
-    "priority": "HIGH",
-    "createdAt": "2026-04-14T18:20:54",
-    "updatedAt": "2026-04-14T18:21:30"
-}
-```
-
 Returns `404 Not Found` if the task does not exist.
 
 ---
 
-### Delete a Task
+### Delete a Task (Soft Delete)
 
-`DELETE http://localhost:8080/api/tasks/{id}`
+`DELETE /api/tasks/{id}`
+
+Sets `deleted = true`. The task is hidden from all list endpoints but remains in the database.
 
 **Response:** `204 No Content`
 
@@ -162,73 +163,41 @@ Returns `404 Not Found` if the task does not exist.
 
 ---
 
-### Get Completed Tasks
+### Restore a Task
 
-`GET http://localhost:8080/api/tasks/completed`
+`PUT /api/tasks/{id}/restore`
+
+Restores a soft-deleted task by setting `deleted = false`.
 
 **Response:** `200 OK`
 
-```json
-[
-  {
-    "id": 3,
-    "title": "Buy groceries",
-    "description": "Milk, eggs, bread",
-    "completed": true,
-    "priority": "LOW",
-    "createdAt": "2026-04-14T18:20:54",
-    "updatedAt": "2026-04-14T18:20:54"
-  }
-]
-```
+Returns `404 Not Found` if the task does not exist.
+
+---
+
+### Get Completed Tasks
+
+`GET /api/tasks/completed`
+
+**Response:** `200 OK`
 
 ---
 
 ### Get Incomplete Tasks
 
-`GET http://localhost:8080/api/tasks/incomplete`
+`GET /api/tasks/incomplete`
 
 **Response:** `200 OK`
-
-```json
-[
-  {
-    "id": 1,
-    "title": "Study for midterm",
-    "description": "Review chapters 1-5",
-    "completed": false,
-    "priority": "HIGH",
-    "createdAt": "2026-04-14T18:20:54",
-    "updatedAt": "2026-04-14T18:20:54"
-  }
-]
-```
 
 ---
 
 ### Filter by Priority
 
-`GET http://localhost:8080/api/tasks/priority/{priority}`
+`GET /api/tasks/priority/{priority}`
 
 **Valid values:** `LOW`, `MEDIUM`, `HIGH`
 
-**Example:** `GET http://localhost:8080/api/tasks/priority/HIGH`
-
-**Response:** `200 OK`
-
-```json
-[
-  {
-    "id": 1,
-    "title": "Study for midterm",
-    "description": "Review chapters 1-5",
-    "completed": false,
-    "priority": "HIGH",
-    "createdAt": "2026-04-14T18:20:54",
-    "updatedAt": "2026-04-14T18:20:54"
-  }
-]
-```
+**Example:** `GET /api/tasks/priority/HIGH`
 
 Returns `400 Bad Request` if the priority value is invalid.
 
@@ -236,71 +205,76 @@ Returns `400 Bad Request` if the priority value is invalid.
 
 ### Search Tasks
 
-`GET http://localhost:8080/api/tasks/search?keyword={keyword}`
+`GET /api/tasks/search?keyword={keyword}`
 
 Searches both `title` and `description` fields (case-insensitive).
 
-**Example:** `GET http://localhost:8080/api/tasks/search?keyword=homework`
-
-**Response:** `200 OK`
-
-```json
-[
-  {
-    "id": 1,
-    "title": "Complete Homework 6",
-    "description": "Finish Spring Data JPA assignment",
-    "completed": false,
-    "priority": "HIGH",
-    "createdAt": "2026-04-14T18:20:54",
-    "updatedAt": "2026-04-14T18:20:54"
-  }
-]
-```
+**Example:** `GET /api/tasks/search?keyword=homework`
 
 ---
 
 ### Get Paginated Tasks
 
-`GET http://localhost:8080/api/tasks/paginated`
+`GET /api/tasks/paginated`
 
-**Query Parameters:**
+| Parameter | Default | Description                  |
+|-----------|---------|------------------------------|
+| `page`    | `0`     | Page number (0-indexed)      |
+| `size`    | `10`    | Number of tasks per page     |
+| `sortBy`  | `id`    | Field to sort by             |
 
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `page` | `0` | Page number (0-indexed) |
-| `size` | `10` | Number of tasks per page |
-| `sortBy` | `id` | Field to sort by |
+**Example:** `GET /api/tasks/paginated?page=0&size=5&sortBy=priority`
 
-**Example:** `GET http://localhost:8080/api/tasks/paginated?page=0&size=5&sortBy=priority`
+---
 
-**Response:** `200 OK`
+## Error Responses
+
+All errors return a consistent JSON structure:
 
 ```json
 {
-    "content": [...],
-    "totalElements": 10,
-    "totalPages": 2,
-    "size": 5,
-    "number": 0
+  "timestamp": "2026-04-30T21:00:00",
+  "status": 404,
+  "error": "Not Found",
+  "message": "Task with ID 999 not found",
+  "path": "/api/tasks/999"
 }
 ```
 
+| Status | Meaning                              |
+|--------|--------------------------------------|
+| `400`  | Validation failed or bad input       |
+| `404`  | Task not found                       |
+| `500`  | Unexpected server error              |
+
+---
+
+## Health Endpoint
+
+`GET /actuator/health`
+
+```json
+{
+  "status": "UP"
+}
+```
+
+Other available endpoints:
+- `/actuator/info`
+- `/actuator/metrics`
 ---
 
 ## Task Fields
 
-| Field | Type | Rules |
-|-------|------|-------|
-| `title` | String | Required, 3–100 characters |
-| `description` | String | Optional, max 500 characters |
-| `completed` | Boolean | `true` or `false` |
-| `priority` | String | `LOW`, `MEDIUM`, `HIGH` |
-| `createdAt` | DateTime | Auto-set on creation |
-| `updatedAt` | DateTime | Auto-updated on every save |
+| Field         | Type     | Rules                              |
+|---------------|----------|------------------------------------|
+| `title`       | String   | Required, 3–100 characters         |
+| `description` | String   | Optional, max 500 characters       |
+| `completed`   | Boolean  | `true` or `false`                  |
+| `priority`    | String   | `LOW`, `MEDIUM`, `HIGH`            |
+| `createdAt`   | DateTime | Auto-set on creation               |
+| `updatedAt`   | DateTime | Auto-updated on every save         |
 
 ---
 
 ## Video
-
-[Add your video link here]

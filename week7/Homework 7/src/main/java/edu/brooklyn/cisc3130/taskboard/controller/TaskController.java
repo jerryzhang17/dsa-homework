@@ -79,6 +79,13 @@ public class TaskController {
         Task saved = taskService.updateTask(id, updatedTask);
         return ResponseEntity.ok(TaskResponse.fromEntity(saved));
     }
+
+    @PutMapping("/{id}/restore")
+    public ResponseEntity<TaskResponse> restoreTask(@PathVariable Integer id) {
+        taskService.restoreTask(id);
+        Task task = taskService.getTaskById(id);
+        return ResponseEntity.ok(TaskResponse.fromEntity(task));
+    }
     
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Integer id) {

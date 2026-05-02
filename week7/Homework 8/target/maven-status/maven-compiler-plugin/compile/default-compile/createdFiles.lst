@@ -1,0 +1,14 @@
+edu/brooklyn/cisc3130/taskboard/model/Task.class
+edu/brooklyn/cisc3130/taskboard/exception/TaskNotFoundException.class
+edu/brooklyn/cisc3130/taskboard/CampusTaskboardApplication.class
+edu/brooklyn/cisc3130/taskboard/config/LoggingFilter.class
+edu/brooklyn/cisc3130/taskboard/controller/TaskController.class
+edu/brooklyn/cisc3130/taskboard/dto/ErrorResponse.class
+edu/brooklyn/cisc3130/taskboard/exception/GlobalExceptionHandler.class
+edu/brooklyn/cisc3130/taskboard/model/Task$Priority.class
+edu/brooklyn/cisc3130/taskboard/exception/InvalidTaskDataException.class
+edu/brooklyn/cisc3130/taskboard/dto/TaskResponse.class
+edu/brooklyn/cisc3130/taskboard/repository/TaskRepository.class
+edu/brooklyn/cisc3130/taskboard/service/TaskService.class
+edu/brooklyn/cisc3130/taskboard/data/DataInitializer.class
+edu/brooklyn/cisc3130/taskboard/dto/TaskRequest.class

@@ -1,9 +1,5 @@
 package edu.brooklyn.cisc3130.taskboard;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.brooklyn.cisc3130.taskboard.dto.TaskRequest;
-import edu.brooklyn.cisc3130.taskboard.model.Task;
-import edu.brooklyn.cisc3130.taskboard.repository.TaskRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +8,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import edu.brooklyn.cisc3130.taskboard.dto.TaskRequest;
+import edu.brooklyn.cisc3130.taskboard.model.Task;
+import edu.brooklyn.cisc3130.taskboard.repository.TaskRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
